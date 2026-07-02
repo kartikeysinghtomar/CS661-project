@@ -1,0 +1,28 @@
+[project]
+name = "censusscope-api"
+version = "0.1.0"
+description = "FastAPI service for India Census 2011 analytics"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "pydantic>=2.9",
+    "orjson>=3.10",
+    "python-multipart>=0.0.12",
+]
+
+[project.optional-dependencies]
+dev = ["ruff>=0.7", "pytest>=8.3", "httpx>=0.27"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
