@@ -122,26 +122,6 @@ frontend/
   scripts/
     build-topojson.js # GeoJSON → TopoJSON pipeline
 ```
-
-## Engineering decisions worth interview-talking-about
-
-1. **No module-level globals.** The original loaded data into module globals; this version uses a service class instantiated in the FastAPI lifespan. Trivial change, but unlocks testability.
-2. **Declarative categorisation rules.** Original code substring-matched in a nested if/elif chain with an indentation bug that silently mis-categorised education metrics. Now it's an ordered list of (category, must-contain, must-not-contain) tuples.
-3. **Worker boundary chosen by profiling, not vibes.** Chrome DevTools Performance shows the correlation matrix recomputation as a long task on metric switch. Moving exactly that to a worker — and nothing more — is the right surgical cut.
-4. **Smallest tool that fits, every time.** `idb-keyval` (1KB) not Dexie. `zustand` (1KB) not Redux. `clsx + tailwind-merge` not styled-components. Bundle size matters for a dashboard people open once.
-5. **URL is canonical state.** Means the back button works, screenshots come with context, and there's no "where did my selection go" after a refresh.
-
-## Status
-
-- [x] State analysis (choropleth, rankings, stats panel)
-- [x] Composite index builder
-- [x] URL state sync
-- [x] IndexedDB cache + Web Worker
-- [ ] District drill-down (foundations in place, view pending)
-- [ ] Compare states (radar + side-by-side, foundations in place)
-- [ ] Vitest + Playwright suites
-- [ ] CI deploy to Vercel + Render
-
 ## Data
 
 Census of India, 2011. Originally distributed by the Office of the Registrar General & Census Commissioner. GeoJSON state boundaries from public-domain repositories — see `backend/data/geojson/` for attributions.
